@@ -25,7 +25,13 @@ public class Evaluador {
 		return obtenerGrupos(dataSetOrdenado, sumatoria/2); 
 	}
 	
-	
+	/**
+	 * Función recursiva mediante la cual se obtiene los grupos formados
+	 * @param dataSetOrdenado
+	 * @param totalDeUnGrupo
+	 * @return
+	 * @author dhernandezc
+	 */
 	private ArrayList<String> obtenerGrupos(ArrayList<Integer> dataSetOrdenado, int totalDeUnGrupo) {
 		int cantidadElementos = dataSetOrdenado.size(); 
 		for (int i = 0; i < cantidadElementos; i++) {
