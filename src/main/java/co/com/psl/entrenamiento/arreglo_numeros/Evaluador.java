@@ -9,7 +9,13 @@ import com.com.psl.entrenamiento.exception.CanNotBeFormedGroupsException;
 /**
  */
 public class Evaluador {
-
+	
+	private String grupoUno = "";
+	private String grupoDos = "";
+	private ArrayList<String> gruposFinales = new ArrayList<String>();
+	private int numeroEvaluado;
+	private int totalPrimerGrupo = 0;
+	
 	public ArrayList<String> evaluarArreglo(ArrayList<Integer> dataSet) throws CanNotBeFormedGroupsException {
 		int sumatoria = sumarElementos(dataSet);
 		if (sumatoria %2 != 0) {
@@ -21,11 +27,6 @@ public class Evaluador {
 	
 	
 	private ArrayList<String> obtenerGrupos(ArrayList<Integer> dataSetOrdenado, int totalDeUnGrupo) {
-		String primerGrupo;
-		String grupoUno = "";
-		String grupoDos = "";
-		ArrayList<String> gruposFinales = new ArrayList<String>();
-		int numeroEvaluado;
 		int cantidadElementos = dataSetOrdenado.size(); 
 		for (int i = 0; i < cantidadElementos; i++) {
 			numeroEvaluado = dataSetOrdenado.get(i);
@@ -34,11 +35,26 @@ public class Evaluador {
 				dataSetOrdenado.remove(i);
 				grupoDos = dataSetOrdenado.toString();
 				grupoDos = grupoDos.substring(1, grupoDos.length()-1);
-				break;
+				gruposFinales.add(grupoUno);
+				gruposFinales.add(grupoDos);
+				return gruposFinales;
+			}else if (totalPrimerGrupo + numeroEvaluado == totalDeUnGrupo) {
+				totalPrimerGrupo += numeroEvaluado;
+				grupoUno = new StringBuilder(grupoUno).append(", ").append(numeroEvaluado).toString();
+				dataSetOrdenado.remove(i);
+				grupoDos = dataSetOrdenado.toString();
+				grupoDos = grupoDos.substring(1, grupoDos.length()-1);
+				gruposFinales.add(grupoUno);
+				gruposFinales.add(grupoDos);
+				return gruposFinales;
+			}else if (totalPrimerGrupo + numeroEvaluado < totalDeUnGrupo) {
+				grupoUno = new StringBuilder(grupoUno).append(", ").append(numeroEvaluado).toString();
+				dataSetOrdenado.remove(i);
+				obtenerGrupos(dataSetOrdenado, totalDeUnGrupo);
+			}else {
+				obtenerGrupos(dataSetOrdenado, totalDeUnGrupo);
 			}
 		}
-		gruposFinales.add(grupoUno);
-		gruposFinales.add(grupoDos);
 		return gruposFinales;
 	}
 
