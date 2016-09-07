@@ -9,8 +9,6 @@ import org.apache.commons.lang3.StringUtils;
 
 import com.com.psl.entrenamiento.exception.CanNotBeFormedGroupsException;
 
-import junit.framework.TestCase;
-
 public class EvaluadorTest {
 
 	private Evaluador evaluador;
@@ -20,13 +18,14 @@ public class EvaluadorTest {
 	private String esperadoGrupo2;
 	
 	@Test
-	public void evaluarArregloConDosNumerosIguales() throws CanNotBeFormedGroupsException{
-		esperadoGrupo1 = "1";
-		esperadoGrupo2 = "1";
+	public void evaluarArregloConUnNumeroEnUnGrupo() throws CanNotBeFormedGroupsException{
+		esperadoGrupo1 = "5";
+		esperadoGrupo2 = "3, 2";
 		evaluador = new Evaluador();
 		dataSet = new ArrayList<Integer>();
-		dataSet.add(1);
-		dataSet.add(1);
+		dataSet.add(2);
+		dataSet.add(3);
+		dataSet.add(5);
 		arrayResultadoEsperado = evaluador.evaluarArreglo(dataSet);
 		assertTrue(StringUtils.equals(esperadoGrupo1, arrayResultadoEsperado.get(0)));
 		assertTrue(StringUtils.equals(esperadoGrupo2, arrayResultadoEsperado.get(1)));

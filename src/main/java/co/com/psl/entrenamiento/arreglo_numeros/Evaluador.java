@@ -11,16 +11,38 @@ import com.com.psl.entrenamiento.exception.CanNotBeFormedGroupsException;
 public class Evaluador {
 
 	public ArrayList<String> evaluarArreglo(ArrayList<Integer> dataSet) throws CanNotBeFormedGroupsException {
-		ArrayList<Integer> dataSetOrdenado = ordernarArregloMayorAMenor(dataSet);
-		int sumatoria = sumarElementos(dataSetOrdenado);
+		int sumatoria = sumarElementos(dataSet);
 		if (sumatoria %2 != 0) {
 			throw new CanNotBeFormedGroupsException("No se pueden formar los grupos");
 		}
-		
-		return new ArrayList<String>();
+		ArrayList<Integer> dataSetOrdenado = ordernarArregloMayorAMenor(dataSet);
+		return obtenerGrupos(dataSetOrdenado, sumatoria/2); 
 	}
 	
 	
+	private ArrayList<String> obtenerGrupos(ArrayList<Integer> dataSetOrdenado, int totalDeUnGrupo) {
+		String primerGrupo;
+		String grupoUno = "";
+		String grupoDos = "";
+		ArrayList<String> gruposFinales = new ArrayList<String>();
+		int numeroEvaluado;
+		int cantidadElementos = dataSetOrdenado.size(); 
+		for (int i = 0; i < cantidadElementos; i++) {
+			numeroEvaluado = dataSetOrdenado.get(i);
+			if (numeroEvaluado == totalDeUnGrupo) {
+				grupoUno = Integer.toString(numeroEvaluado);
+				dataSetOrdenado.remove(i);
+				grupoDos = dataSetOrdenado.toString();
+				grupoDos = grupoDos.substring(1, grupoDos.length()-1);
+				break;
+			}
+		}
+		gruposFinales.add(grupoUno);
+		gruposFinales.add(grupoDos);
+		return gruposFinales;
+	}
+
+
 	/**
 	 * Función en la cual se obtiene el total de la suma de todos los números del arreglo;
 	 * @param dataSetOrdenado
